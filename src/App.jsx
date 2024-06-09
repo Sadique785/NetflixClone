@@ -2,33 +2,34 @@ import { useState } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
+import NavBar from './Components/NavBar/NavBar'
+import Banner from './Components/Banner/Banner'
+import RowPost from './Components/RowPost/RowPost'
+import { action, horror, originals } from './urls'
+import YouTube from 'react-youtube'
 
 function App() {
-  const [count, setCount] = useState(0)
+
+  const [urlId, setUrlId] = useState(null);
+
+  const opts = {
+    height: '390',
+    width: '100%',
+    playerVars: {
+      autoplay: 1,
+    },
+  };
 
   return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+<div>
+    <NavBar/>
+    <Banner/>
+    <RowPost url={originals} title='Netflix Originals' setUrlId={setUrlId} urlId={urlId} />
+    {urlId && <YouTube opts={opts} videoId={urlId.key} />}
+    <RowPost url={action} title='Action' isSmall setUrlId={setUrlId} urlId={urlId} />
+    <RowPost url={horror} title='Horror' isSmall setUrlId={setUrlId} urlId={urlId} />
+    
+</div>
   )
 }
 
